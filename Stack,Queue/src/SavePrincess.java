@@ -1,7 +1,10 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
 /**
  * 공주 구하기
- * 정보 왕국의 이웃 나라 외동딸 공주가 숲속의 괴물에게 잡혀갔습니다.
- * 정보 왕국에는 왕자가 N명이 있는데 서로 공주를 구하러 가겠다고 합니다.
+ * 정보 왕국의 이웃 나라 외동딸 공주가 숲속의 괴물에게 잡혀갔습니다.정보 왕국에는 왕자가 N명이 있는데 서로 공주를 구하러 가겠다고 합니다.
  * 정보왕국의 왕은 다음과 같은 방법으로 공주를 구하러 갈 왕자를 결정하기로 했습니다.
  * 왕은 왕자들을 나이 순으로 1번부터 N번까지 차례로 번호를 매긴다.
  * 그리고 1번 왕자부터 N번 왕자까지 순서대로 시계 방향으로 돌아가며 동그랗게 앉게 한다.
@@ -25,9 +28,29 @@
 
 public class SavePrincess {
 
-    
+    public int solution(int n, int k) {
+        int answer = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            queue.offer(i);
+        }
+        while (!queue.isEmpty()) {
+            for (int i = 1; i < k; i++) {
+                queue.offer(queue.poll());
+            }
+            queue.poll();
+            if(queue.size() == 1) answer = queue.poll();
+        }
+
+        return answer;
+    }
+
 
     public static void main(String[] args) {
-
+        SavePrincess savePrincess = new SavePrincess();
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        System.out.println(savePrincess.solution(n, k));
     }
 }
